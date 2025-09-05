@@ -15,15 +15,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     cors({
-        origin:"http://localhost:5173",
-        // origin: "https://www.royasow.store",//مال الفرونت اند
+        origin:"https://www.arkanalgwda.com",
+        origin: "https://arkanalgwda.com",//مال الفرونت اند
         credentials: true,
     })
 );
 
 // دعم طلبات OPTIONS (Preflight Requests)
 app.options('*', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Origin', 'https://arkanalgwda.com');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.send();

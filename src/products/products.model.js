@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
+// backend/models/Product.js
+const mongoose = require('mongoose');
 
 const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     category: { type: String, required: true },
-    size: { type: String }, // إضافة حقل الحجم
+    size: { type: String }, // اختياري
     description: { type: String, required: true },
-    price: { type: Number, required: true }, // السعر العادي لجميع المنتجات
+    price: { type: Number, required: true },
     image: { type: [String], required: true },
     oldPrice: { type: Number },
     rating: { type: Number, default: 0 },
@@ -15,6 +16,4 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Products = mongoose.model("Product", ProductSchema);
-
-module.exports = Products;
+module.exports = mongoose.model('Product', ProductSchema);
