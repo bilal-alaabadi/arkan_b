@@ -17,7 +17,7 @@ app.use(
     cors({
         origin:"https://www.arkanalgwda.com",
 
-        // origin: "https://www.royasow.store",//مال الفرونت اند
+        origin: "https://arkanalgwda.com",//مال الفرونت اند
         credentials: true,
     })
 );
