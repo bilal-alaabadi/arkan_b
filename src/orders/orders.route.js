@@ -63,13 +63,14 @@ router.post("/create-checkout-session", async (req, res) => {
     depositMode, // إذا true: المقدم 10 ر.ع (من ضمنه التوصيل)
     giftCard,    // { from, to, phone, note } اختياري (على مستوى الطلب)
     gulfCountry, // الدولة المختارة داخل "دول الخليج" (إن وُجدت)
+    shippingMethod // ✅ "home" أو "office" قادم من الواجهة
   } = req.body;
 
   // رسوم الشحن (ر.ع.)
   const shippingFee =
     country === "دول الخليج"
       ? (gulfCountry === "الإمارات" ? 4 : 5)
-      : 2;
+      : (shippingMethod === "office" ? 1 : 2); // ✅ داخل عُمان: مكتب=1، منزل=2
 
   const DEPOSIT_AMOUNT_OMR = 10; // المقدم الثابت
 
@@ -136,7 +137,6 @@ router.post("/create-checkout-session", async (req, res) => {
         image: Array.isArray(p.image) ? p.image[0] : p.image,
         measurements: p.measurements || {},
         category: p.category || "",
-        // ✅ بطاقة الهدية على مستوى "كل منتج"
         giftCard: normalizeGift(p.giftCard) || undefined,
       })),
       amountToCharge,            // ما يُتوقع دفعه الآن
@@ -150,7 +150,6 @@ router.post("/create-checkout-session", async (req, res) => {
       status: "completed",       // سيُحفظ فعليًا عند النجاح فقط
       depositMode: !!depositMode,
       remainingAmount: depositMode ? Math.max(0, originalTotal - DEPOSIT_AMOUNT_OMR) : 0,
-      // ✅ إبقاء الحقل العام للتوافق — سيتم استخدامه فقط إذا لم توضع بطاقات على مستوى المنتجات
       giftCard: normalizeGift(giftCard),
     };
 
@@ -205,6 +204,7 @@ router.post("/create-checkout-session", async (req, res) => {
     });
   }
 });
+
 
 
 // في ملف routes/orders.js
