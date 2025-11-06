@@ -10,6 +10,7 @@ const ProductSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: { type: [String], required: true },
     oldPrice: { type: Number },
+    stock: { type: Number, required: true, min: 0, default: 0 }, // ✅ كمية المنتج
     rating: { type: Number, default: 0 },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
   },
